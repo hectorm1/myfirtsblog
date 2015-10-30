@@ -1,36 +1,13 @@
-{% load staticfiles %}
-    <html>
-        <head>
-            <title>Django Girls blog</title>
-            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-            <link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-            <link rel="stylesheet" href="{% static "css/blog.css" %}">
-        </head>
-        <div class ="page-header">
-          <h1><a href="/">Django Girls Blog</a></h1>
-        </div>
+{% extends "blog/base.html" %}
 
-        <body>
-
-                <h1><a href="">Django Girls Blog</a></h1>
+{% block content %}
+    {% for post in publicaciones %}
+        <div class="post">
+            <div class="date">
+                {{ post.fecha_publicacion }}
             </div>
-            <div class="content container">
-              <div class="row">
-                <div class="col-md-8">
-            {% for publicacion in publicaciones %}
-            <div class="post">
-                <div class="date">
-                <p>publicado: {{publicacion.fecha_publicacion}}</p>
-              </div>
-                <h2><a href="">{{publicacion.titulo}}</a></h2>
-                <p>{{ publicacion.text|linebreaks }}</p>
-              </div>
-              
-
-            {% endfor%}
-          </div>
-          </div>
-          </div>
-        </body>
-    </html>
+            <h1><a href="{% url "post_detail" pk=post.pk %}">{{ post.titulo }}</a></h1>
+            <p>{{ post.texto|linebreaks }}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}
